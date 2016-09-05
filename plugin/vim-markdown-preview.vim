@@ -51,7 +51,7 @@ function! Vim_Markdown_Preview()
   let b:curr_file = expand('%:p')
 
   if g:vim_markdown_preview_github == 1
-    call system('grip "' . b:curr_file . '" --export /tmp/vim-markdown-preview.html --title vim-markdown-preview.html')
+    call system('pandoc --self-contained --css $HOME/.bin/github.css --from markdown_github --to html --standalone -o /tmp/vim-markdown-preview.html "' . b:curr_file . '"')
   else
     call system('markdown "' . b:curr_file . '" > /tmp/vim-markdown-preview.html')
   endif
@@ -98,7 +98,7 @@ function! Vim_Markdown_Preview_Local()
   let b:curr_file = expand('%:p')
 
   if g:vim_markdown_preview_github == 1
-    call system('grip "' . b:curr_file . '" --export vim-markdown-preview.html --title vim-markdown-preview.html')
+    call system('pandoc --self-contained --css $HOME/.bin/github.css --from markdown_github --to html --standalone -o /tmp/vim-markdown-preview.html "' . b:curr_file . '"')
   else
     call system('markdown "' . b:curr_file . '" > vim-markdown-preview.html')
   endif
