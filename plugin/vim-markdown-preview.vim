@@ -29,6 +29,10 @@ if !exists("g:vim_markdown_preview_hotkey")
     let g:vim_markdown_preview_hotkey='<C-p>'
 endif
 
+if !exists("g:vim_markdown_preview_css_file")
+    let g:vim_markdown_preview_css_file = g:vmp_script_path . '/pandoc.css'
+endif
+
 
 let g:vmp_osname = 'Unidentified'
 
@@ -46,12 +50,11 @@ if has('mac')
 endif
 
 
-
 function! Vim_Markdown_Preview()
   let b:curr_file = expand('%:p')
 
   if g:vim_markdown_preview_github == 1
-    call system('pandoc --self-contained --css $HOME/.bin/github.css --from markdown_github --to html --standalone -o /tmp/vim-markdown-preview.html "' . b:curr_file . '"')
+    call system('pandoc --self-contained --css "' . g:vim_markdown_preview_css_file . '" --from markdown_github --to html --standalone -o /tmp/vim-markdown-preview.html "' . b:curr_file . '"')
   else
     call system('markdown "' . b:curr_file . '" > /tmp/vim-markdown-preview.html')
   endif
@@ -98,7 +101,7 @@ function! Vim_Markdown_Preview_Local()
   let b:curr_file = expand('%:p')
 
   if g:vim_markdown_preview_github == 1
-    call system('pandoc --self-contained --css $HOME/.bin/github.css --from markdown_github --to html --standalone -o /tmp/vim-markdown-preview.html "' . b:curr_file . '"')
+    call system('pandoc --self-contained --css "' . g:vim_markdown_preview_css_file . '" --from markdown_github --to html --standalone -o /tmp/vim-markdown-preview.html "' . b:curr_file . '"')
   else
     call system('markdown "' . b:curr_file . '" > vim-markdown-preview.html')
   endif
